@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E.B.N. Chacao - Portal Institucional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* COLORES Y VARIABLES */
+        :root {
+            --rojo: #9E1B1B;
+            --dorado: #D4AF37;
+            --dorado-oscuro: #A67C00;
+            --azul: #2B547E;
+            --blanco: #FFFFFF;
+            --fondo: #F8F9FA;
+            --texto: #333333;
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--fondo); color: var(--texto); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
+
+        /* NAVEGACIÓN SUPERIOR */
+        header { background: var(--blanco); box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; border-bottom: 5px solid var(--dorado); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 10px 5%; max-width: 1400px; margin: auto; }
+        .logo-box { display: flex; align-items: center; gap: 15px; }
+        .logo-box img { width: 75px; height: auto; }
+        .logo-texto h1 { color: var(--rojo); font-size: 1.4rem; font-weight: 900; }
+        .logo-texto p { color: var(--dorado-oscuro); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; }
+        
+        nav ul { list-style: none; display: flex; gap: 15px; flex-wrap: wrap; }
+        nav a { text-decoration: none; color: var(--texto); font-weight: 700; font-size: 0.9rem; padding: 5px 10px; transition: 0.3s; }
+        nav a:hover { color: var(--blanco); background: var(--rojo); border-radius: 5px; }
+
+        /* HERO - PORTADA */
+        .hero {
+            background: linear-gradient(rgba(158, 27, 27, 0.85), rgba(158, 27, 27, 0.85)), url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1920&q=80') center/cover fixed;
+            padding: 150px 5%; text-align: center; color: var(--blanco);
+        }
+        .hero h2 { font-size: 3.5rem; color: var(--dorado); font-style: italic; text-shadow: 2px 2px 5px rgba(0,0,0,0.7); margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px; }
+        .btn { display: inline-block; padding: 12px 30px; font-weight: 700; text-decoration: none; border-radius: 30px; transition: 0.3s; cursor: pointer; border: none; }
+        .btn-dorado { background: var(--dorado); color: var(--rojo); box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4); }
+        .btn-dorado:hover { background: var(--blanco); transform: scale(1.05); }
+        .btn-rojo { background: var(--rojo); color: var(--blanco); }
+        .btn-rojo:hover { background: var(--dorado-oscuro); }
+        .btn-youtube { background: #FF0000; color: var(--blanco); box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3); }
+        .btn-youtube:hover { background: #CC0000; transform: scale(1.05); }
+
+        /* SECCIONES Y CONTENEDORES */
+        .seccion { padding: 80px 5%; max-width: 1200px; margin: auto; }
+        .titulo { text-align: center; color: var(--rojo); font-size: 2.5rem; margin-bottom: 40px; text-transform: uppercase; position: relative; }
+        .titulo::after { content: ''; display: block; width: 80px; height: 4px; background: var(--dorado); margin: 10px auto 0; }
+
+        /* GRID GENÉRICO (Cajas) */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .caja { background: var(--blanco); padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--azul); }
+        .caja h3 { color: var(--azul); margin-bottom: 15px; font-size: 1.4rem; }
+
+        /* PERSONAL - TREN DIRECTIVO Y ROSTROS DEL AYER */
+        .fondo-gris { background-color: #E9ECEF; }
+        .grid-personal { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center; margin-top: 20px; }
+        .perfil-img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid var(--dorado); margin-bottom: 15px; }
+        .rostro-ayer img { border-color: #777; filter: grayscale(100%); transition: 0.3s; }
+        .rostro-ayer img:hover { filter: grayscale(0%); border-color: var(--dorado); }
+
+        /* FORMULARIOS DE PREINSCRIPCIÓN */
+        .form-inscripcion { background: var(--blanco); padding: 40px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-left: 6px solid var(--rojo); margin-top: 40px; }
+        .form-grupo { margin-bottom: 15px; }
+        .form-grupo label { display: block; font-weight: 600; margin-bottom: 5px; }
+        .form-grupo input, .form-grupo select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: 'Open Sans'; }
+
+        /* VIDA ESCOLAR (VIDEOS Y ACTIVIDADES) */
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        /* SEMILLA PARA CHACAO - ACTUALIZADO CON PAGOS */
+        .semilla-banner { background: linear-gradient(135deg, var(--azul), #1A365D); color: var(--blanco); border-radius: 15px; padding: 50px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .semilla-banner h2 { color: var(--dorado); font-size: 2.5rem; margin-bottom: 10px; }
+        .pasarela-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; margin-top: 30px; }
+        .tarjeta-pago { background: rgba(255, 255, 255, 0.1); border: 1px solid var(--dorado); padding: 25px; border-radius: 10px; transition: 0.3s; }
+        .tarjeta-pago:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-5px); }
+        .tarjeta-pago h4 { color: var(--dorado); margin-bottom: 15px; font-size: 1.3rem; }
+        .tarjeta-pago p { font-size: 0.95rem; line-height: 1.8; margin-bottom: 15px; }
+
+        /* BOTON WHATSAPP FLOTANTE */
+        .whatsapp-btn {
+            position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); z-index: 1000; transition: transform 0.3s; text-decoration: none;
+        }
+        .whatsapp-btn:hover { transform: scale(1.1); background-color: #1EBE5D; }
+        .whatsapp-btn img { width: 35px; height: 35px; }
+
+        /* FOOTER */
+        footer { background: #222; color: #ccc; text-align: center; padding: 40px 20px; position: relative; }
+        .admin-btn { position: absolute; bottom: 20px; right: 20px; background: none; border: 1px solid #555; color: #888; padding: 5px 10px; border-radius: 3px; cursor: pointer; transition: 0.3s; }
+        .admin-btn:hover { color: var(--dorado); border-color: var(--dorado); }
+
+        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    </style>
+</head>
+<body>
+
+    <!-- BOTÓN WHATSAPP -->
+    <a href="https://wa.me/58XXXXXXXXXXX" class="whatsapp-btn" target="_blank" title="Contáctanos por WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+
+    <!-- ENCABEZADO -->
+    <header>
+        <div class="nav-container">
+            <div class="logo-box">
+                <img src="Gemini_Generated_Image_wvgj01wvgj01wvgj-removebg-preview.png" alt="Escudo EBN Chacao">
+                <div class="logo-texto">
+                    <h1>E.B.N. CHACAO</h1>
+                    <p>San Francisco de Yare</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#historia">Quiénes Somos</a></li>
+                    <li><a href="#personal">Tren Directivo</a></li>
+                    <li><a href="#escolar">Año Escolar 26-27</a></li>
+                    <li><a href="#novedades">Novedades</a></li>
+                    <li><a href="#semilla">Semilla para Chacao</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PORTADA PRINCIPAL -->
+    <section class="hero">
+        <h2>"Nuestra raíz, nuestra identidad y nuestro orgullo: Nosotros somos Chacao."</h2>
+        <p>Formando a las futuras generaciones de San Francisco de Yare con valores, cultura y excelencia educativa.</p>
+        <a href="#novedades" class="btn btn-dorado">Novedades</a>
+    </section>
+
+    <!-- QUIÉNES SOMOS / HISTORIA -->
+    <section id="historia" class="seccion">
+        <h2 class="titulo">Nuestra Institución</h2>
+        <div class="grid-3">
+            <div class="caja">
+                <h3>📜 Nuestra Historia</h3>
+                <p>Nacimos en el corazón de San Francisco de Yare con el firme propósito de educar. A lo largo de los años, la E.B.N. Chacao ha sido un segundo hogar para miles de jóvenes, forjando el carácter y el intelecto de nuestra comunidad.</p>
+            </div>
+            <div class="caja">
+                <h3>🎯 Misión y Visión</h3>
+                <p><strong>Misión:</strong> Brindar una educación integral y de calidad, arraigada en los valores históricos y la identidad cultural.</p>
+                <p><strong>Visión:</strong> Ser la institución educativa de referencia en el municipio, integrando escuela, familia y comunidad.</p>
+            </div>
+            <div class="caja">
+                <h3>📍 Dónde Estamos</h3>
+                <p>Ubicados orgullosamente en San Francisco de Yare, Estado Miranda. Un espacio seguro y accesible para todos nuestros estudiantes y representantes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TREN DIRECTIVO Y ROSTROS DEL AYER -->
+    <section id="personal" class="seccion fondo-gris">
+        <h2 class="titulo">Tren Directivo</h2>
+        <p style="text-align: center; margin-bottom: 30px;">Las autoridades que guían el rumbo de nuestra institución académica actualmente.</p>
+        <div class="grid-personal">
+            <div>
+                <img src="https://via.placeholder.com/150" alt="Directora" class="perfil-img">
+                <h4>Prof. [Nombre Apellido]</h4>
+                <p>Directora</p>
+            </div>
+            <div>
+                <img src="https://via.placeholder.com/150" alt="Subdirectora Administrativa" class="perfil-img">
+                <h4>Prof. [Nombre Apellido]</h4>
+                <p>Subdirectora Administrativa</p>
+            </div>
+            <div>
+                <img src="https://via.placeholder.com/150" alt="Subdirectora Académica" class="perfil-img">
+                <h4>Prof. [Nombre Apellido]</h4>
+                <p>Subdirectora Académica</p>
+            </div>
+        </div>
+
+        <hr style="margin: 60px 0; border: 1px solid #ccc;">
+
+        <h2 class="titulo" style="color: var(--azul);">Rostros del Ayer</h2>
+        <p style="text-align: center; margin-bottom: 40px; font-style: italic; max-width: 800px; margin-left: auto; margin-right: auto; color: #555;">
+            "Un sentido y profundo homenaje a quienes sembraron las bases de nuestra historia. Maestras, maestros, personal administrativo y obrero que, con amor, mística y vocación, dejaron una huella imborrable en las aulas y pasillos de la E.B.N. Chacao."
+        </p>
+        <div class="grid-personal rostro-ayer">
+            <div>
+                <img src="https://via.placeholder.com/150" alt="Maestro" class="perfil-img">
+                <h4>[Nombre Apellido]</h4>
+                <p>Docente Fundador</p>
+            </div>
+            <div>
+                <img src="https://via.placeholder.com/150" alt="Administrativo" class="perfil-img">
+                <h4>[Nombre Apellido]</h4>
+                <p>Personal Administrativo</p>
+            </div>
+            <div>
+                <img src="https://via.placeholder.com/150" alt="Obrero" class="perfil-img">
+                <h4>[Nombre Apellido]</h4>
+                <p>Personal Obrero</p>
+            </div>
+            <div>
+                <img src="https://via.placeholder.com/150" alt="Maestra" class="perfil-img">
+                <h4>[Nombre Apellido]</h4>
+                <p>Docente de Trayectoria</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AÑO ESCOLAR 2026-2027 -->
+    <section id="escolar" class="seccion">
+        <h2 class="titulo">Año Escolar 2026-2027</h2>
+        <div class="grid-3" style="margin-bottom: 40px; justify-content: center;">
+            <div class="caja" style="text-align: center; border-top-color: var(--rojo);">
+                <h3 style="color: var(--rojo);">Acuerdos de Convivencia</h3>
+                <p>Revisa nuestras normativas y acuerdos para garantizar un ambiente armonioso en este nuevo año escolar.</p>
+                <a href="#" class="btn btn-rojo" style="margin-top: 15px;">📥 Descargar Acuerdos</a>
+            </div>
+            <div class="caja" style="text-align: center; border-top-color: var(--rojo);">
+                <h3 style="color: var(--rojo);">Solicitud de Recaudos</h3>
+                <p>Conoce los documentos de ingreso necesarios para nuevos estudiantes y regulares.</p>
+                <a href="#" class="btn btn-rojo" style="margin-top: 15px;">📥 Planilla de Solicitud</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- NUESTRO DÍA A DÍA, AVANCES Y CLASES VIRTUALES (NOVEDADES) -->
+    <section id="novedades" class="seccion fondo-gris">
+        <h2 class="titulo" style="font-size: 2rem;">Nuestro día a día, avances y clases virtuales</h2>
+        <div style="text-align: center; margin-bottom: 40px;">
+            <p style="font-size: 1.1rem; margin-bottom: 15px;">Conéctate con nuestra comunidad digital y repasa las clases interactivas desde cualquier lugar.</p>
+            <a href="https://youtube.com/tu-canal" target="_blank" class="btn btn-youtube">▶️ Visita Nuestro Canal de YouTube Oficial</a>
+        </div>
+        <div class="grid-3">
+            <div style="grid-column: span 2;">
+                <h3 style="margin-bottom: 15px; color: var(--azul);">Última Clase o Recorrido Virtual</h3>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video Institucional" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 15px; color: var(--azul);">Noticias Recientes</h3>
+                <div class="caja" style="margin-bottom: 15px;">
+                    <h4 style="color: var(--rojo);">📚 Material de Apoyo</h4>
+                    <p>Actualizaciones semanales sobre las guías y contenidos de nuestras clases virtuales.</p>
+                </div>
+                <div class="caja">
+                    <h4 style="color: var(--rojo);">🏫 Mejoras en el Plantel</h4>
+                    <p>Seguimos avanzando en la recuperación de nuestros espacios educativos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEMILLA PARA CHACAO - AHORA CON PASARELA DE DONACIONES -->
+    <section id="semilla" class="seccion">
+        <div class="semilla-banner">
+            <h2>🌱 Una Semilla para Chacao</h2>
+            <p style="font-size: 1.2rem; margin-top: 10px;"><strong>Sembrando Espacios Dignos para el Futuro.</strong></p>
+            <p style="margin-top: 15px; max-width: 800px;">Invitamos a exalumnos, representantes, empresas aliadas y a toda la comunidad a colaborar en el reacondicionamiento y mantenimiento de nuestra querida escuela. Tu aporte hace la diferencia.</p>
+            
+            <div class="pasarela-grid">
+                <!-- PAGO MÓVIL -->
+                <div class="tarjeta-pago">
+                    <h4>📱 Pago Móvil</h4>
+                    <p>
+                        <strong>Banco:</strong> [Nombre del Banco]<br>
+                        <strong>C.I. / RIF:</strong> [00.000.000]<br>
+                        <strong>Teléfono:</strong> [0414-0000000]
+                    </p>
+                </div>
+
+                <!-- ZELLE -->
+                <div class="tarjeta-pago">
+                    <h4>💵 Transferencia Zelle</h4>
+                    <p>
+                        <strong>Correo:</strong> [correo@ejemplo.com]<br>
+                        <strong>Titular:</strong> [Nombre del Titular de la Cuenta]
+                    </p>
+                </div>
+
+                <!-- PAYPAL (BOTÓN INTERACTIVO) -->
+                <div class="tarjeta-pago">
+                    <h4>🌐 Tarjeta / PayPal</h4>
+                    <p>Aportes internacionales de forma rápida y segura a través de la pasarela de PayPal.</p>
+                    <!-- Cambia el enlace de abajo por tu enlace de PayPal.Me -->
+                    <a href="https://paypal.me/tuusuario" target="_blank" class="btn btn-dorado" style="font-size: 0.9rem; padding: 10px 20px; display: inline-block;">Donar con PayPal</a>
+                </div>
+            </div>
+
+            <p style="margin-top: 30px; font-size: 0.9rem; font-style: italic; opacity: 0.9;">
+                * Por favor, una vez realizado tu aporte, envía el comprobante (capture) a nuestro chat oficial de WhatsApp haciendo clic en el botón verde flotante.
+            </p>
+        </div>
+    </section>
+
+    <!-- PREINSCRIPCIÓN -->
+    <section id="preinscripcion" class="seccion">
+        <div class="form-inscripcion">
+            <h3 style="color: var(--rojo); margin-bottom: 20px; font-size: 1.8rem;">Registro de Preinscripción</h3>
+            <p style="margin-bottom: 20px;">Llene este formulario de intención para iniciar el proceso de ingreso. <em>(Esta sección puede ser removida fácilmente cuando culmine el proceso).</em></p>
+            
+            <form name="Preinscripcion" method="POST" data-netlify="true">
+                <div class="grid-3" style="gap: 15px; margin-bottom: 15px;">
+                    <div class="form-grupo">
+                        <label>Nombres del Estudiante:</label>
+                        <input type="text" name="nombres_estudiante" placeholder="Ej. Juan Carlos" required>
+                    </div>
+                    <div class="form-grupo">
+                        <label>Apellidos del Estudiante:</label>
+                        <input type="text" name="apellidos_estudiante" placeholder="Ej. Pérez Gómez" required>
+                    </div>
+                    <div class="form-grupo">
+                        <label>Grado a cursar (26-27):</label>
+                        <select name="grado_a_cursar" required>
+                            <option value="">Seleccione un grado...</option>
+                            <option value="1">1er Grado</option>
+                            <option value="2">2do Grado</option>
+                            <option value="3">3er Grado</option>
+                            <option value="4">4to Grado</option>
+                            <option value="5">5to Grado</option>
+                            <option value="6">6to Grado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-3" style="gap: 15px; margin-bottom: 20px;">
+                    <div class="form-grupo">
+                        <label>Nombre del Representante:</label>
+                        <input type="text" name="nombre_representante" required>
+                    </div>
+                    <div class="form-grupo">
+                        <label>Teléfono de Contacto:</label>
+                        <input type="tel" name="telefono_contacto" placeholder="0414-XXXXXXX" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-rojo" style="width: 100%; font-size: 1.1rem;">Enviar Solicitud de Preinscripción</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <h3>E.B.N. CHACAO</h3>
+        <p>Orgullo de San Francisco de Yare, Edo. Miranda.</p>
+        <p style="margin-top: 10px; font-size: 0.8rem;">&copy; 2026 Todos los derechos reservados.</p>
+        
+        <button class="admin-btn" onclick="window.location.href='/admin/'">⚙️ Panel Administrador</button>
+    </footer>
+
+    <!-- SCRIPT DE IDENTIDAD PARA CMS -->
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+</body>
+</html>
